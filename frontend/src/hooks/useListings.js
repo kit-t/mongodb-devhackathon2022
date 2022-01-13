@@ -10,6 +10,9 @@ import {
   removeValueAtIndex,
   getTodoIndex,
 } from "../utils";
+import { SearchContext } from "../components/App";
+// import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 
 const getListingIndex = getTodoIndex;
 
@@ -18,6 +21,7 @@ export function useListings() {
   const realmApp = useRealmApp();
   const [listings, setListings] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const { searchTerm } = React.useContext(SearchContext);
 
   // Get a client object for the listing task collection
   const listingCollection = useCollection({
@@ -26,13 +30,30 @@ export function useListings() {
     collection: "listingsAndReviews",
   });
 
-  // Fetch all listings on load and whenever our collection changes (e.g. if the current user changes)
-  React.useEffect(() => {
-    listingCollection.find({}, {limit: 10}).then((fetchedListings) => {
+  const debounceSearchListings = React.useCallback(debounce((query) => {
+    const pipeline = [];
+    if (query) {
+      pipeline.push({
+        $search: {
+          text: {
+            query,
+            path: "name"
+          }
+        }
+      });
+    }
+    pipeline.push({$limit: 10});
+    listingCollection.aggregate(pipeline).then((fetchedListings) => {
       setListings(fetchedListings);
       setLoading(false);
     });
-  }, [listingCollection]);
+  }, 1000, {leading: true}),
+  [listingCollection]);
+
+  // Fetch all listings on load and whenever our collection changes (e.g. if the current user changes)
+  React.useEffect(() => {
+    debounceSearchListings(searchTerm);
+  }, [searchTerm]);
 
   // Use a MongoDB change stream to reactively update state when operations succeed
   useWatch(listingCollection, {
@@ -121,5 +142,6 @@ export function useListings() {
     saveListing,
     toggleListing,
     deleteListing,
+    debounceSearchListings
   };
 }

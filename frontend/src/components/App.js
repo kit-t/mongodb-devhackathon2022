@@ -29,7 +29,6 @@ function App() {
   const [ page, setPage ] = React.useState("home");
   const [ searchTerm, setSearchTerm ] = React.useState();
   React.useEffect(() => {
-    console.log("loginAnon")
     if (!currentUser) {
       logIn(Realm.Credentials.anonymous());
     }
@@ -54,7 +53,7 @@ function App() {
                     <SearchBar
                       value={searchTerm}
                       onChange={(newValue) => setSearchTerm(newValue)}
-                      onRequestSearch={() => console.log(setSearchTerm)}
+                      onRequestSearch={() => setSearchTerm(`${searchTerm}`)}
                     />
                   </div>
                   <div
