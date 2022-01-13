@@ -1,6 +1,4 @@
 {
     "enabled": true,
-    "app_default_domain": "devhackathon2022-bqftl.mongodbstitch.com",
-    "default_error_path": "/index.html",
-    "default_error_code": "200"
+    "app_default_domain": "devhackathon2022-bqftl.mongodbstitch.com"
 }
