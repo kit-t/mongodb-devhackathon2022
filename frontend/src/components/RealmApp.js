@@ -19,15 +19,20 @@ export function RealmAppProvider({ appId, children }) {
   // Wrap the base logIn function to save the logged in user in state
   const logIn = React.useCallback(
     async (credentials) => {
+      if (realmApp.currentUser && credentials) {
+        await currentUser?.logOut();
+        await realmApp.removeUser(currentUser);
+      }
       await realmApp.logIn(credentials);
       setCurrentUser(realmApp.currentUser);
     },
-    [realmApp]
+    [realmApp, currentUser]
   );
   // Wrap the current user's logOut function to remove the logged out user from state
   const logOut = React.useCallback(async () => {
     await currentUser?.logOut();
     await realmApp.removeUser(currentUser);
+    await realmApp.logIn(Realm.Credentials.anonymous());
     setCurrentUser(realmApp.currentUser);
   }, [realmApp, currentUser]);
 

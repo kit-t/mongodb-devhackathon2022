@@ -8,11 +8,10 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { useTodos } from "../hooks/useTodos";
-import { TodoItem } from "./TodoItem";
+import { TodoItem } from "./Item";
 import { useDraftTodos } from "../hooks/useDraftTodos";
 import { DraftTodoItem } from "./DraftTodoItem";
 import { useShowLoader } from "../hooks/util-hooks";
-import { MoreInfo } from "./MoreInfo";
 
 export function TodoItemsPage() {
   const { loading, todos, ...todoActions } = useTodos();
@@ -58,7 +57,6 @@ export function TodoItemsPage() {
           </List>
         </div>
       )}
-      <MoreInfo />
     </Container>
   );
 }
