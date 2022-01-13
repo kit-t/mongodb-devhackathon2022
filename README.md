@@ -1,7 +1,7 @@
 # MongoDB Atlas DevHackathon 2022
 
 ### Overview of My Submission
-https://devhackathon2022-bqftl.mongodbstitch.com/
+Web App: https://devhackathon2022-bqftl.mongodbstitch.com/  
 Built with MongoDB Atlas & MongoDB Realm.
 
 ### Submission Category
