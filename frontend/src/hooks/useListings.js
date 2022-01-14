@@ -37,7 +37,7 @@ export function useListings() {
         $search: {
           text: {
             query,
-            path: "name"
+            path: ["name", "description", "address.country", "address.country_code"]
           }
         }
       });
