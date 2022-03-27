@@ -1,1 +1,13 @@
-[]
+[
+    {
+        "route": "/status",
+        "http_method": "POST",
+        "function_name": "status",
+        "validation_method": "SECRET_AS_QUERY_PARAM",
+        "secret_name": "VISIT_SITES_CRON",
+        "respond_result": true,
+        "fetch_custom_user_data": false,
+        "create_user_on_auth": false,
+        "disabled": false
+    }
+]
